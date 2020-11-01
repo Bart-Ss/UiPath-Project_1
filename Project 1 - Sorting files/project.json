@@ -3,9 +3,10 @@
   "description": "Blank Process",
   "main": "Main.xaml",
   "dependencies": {
+    "Compression.Activities": "[1.0.5]",
     "UiPath.Excel.Activities": "[2.7.2]",
     "UiPath.Mail.Activities": "[1.7.2]",
-    "UiPath.System.Activities": "[19.10.1]",
+    "UiPath.System.Activities": "[20.10.1]",
     "UiPath.UIAutomation.Activities": "[19.11.3]"
   },
   "webServices": [],
@@ -29,7 +30,8 @@
     "libraryOptions": {
       "includeOriginalXaml": false,
       "privateWorkflows": []
-    }
+    },
+    "fileInfos": []
   },
   "expressionLanguage": "VisualBasic"
 }
