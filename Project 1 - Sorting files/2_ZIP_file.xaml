@@ -1,4 +1,15 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Sequence2" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="506,946" sap2010:WorkflowViewState.IdRef="Sequence2_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:si="clr-namespace:System.IO;assembly=mscorlib" xmlns:uascw="clr-namespace:UiPath.Activities.System.Compression.Workflow;assembly=UiPath.System.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Sequence2" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:si="clr-namespace:System.IO;assembly=mscorlib" xmlns:uascw="clr-namespace:UiPath.Activities.System.Compression.Workflow;assembly=UiPath.System.Activities" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="io_UserFolder" Type="InOutArgument(x:String)" />
+    <x:Property Name="io_zip_file" Type="InOutArgument(si:FileInfo)" />
+    <x:Property Name="io_ProjectFolder" Type="InOutArgument(x:String)" />
+    <x:Property Name="out_UnzipFolder" Type="OutArgument(x:String)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>506,1571</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>Sequence2_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="21">
       <x:String>System.Activities</x:String>
@@ -50,9 +61,11 @@
       <AssemblyReference>System.ServiceModel</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Sequence to handle downloaded ZIP file.&#xD;&#xA;Move file to Project foder.&#xA;UnZip the file in Project folder." DisplayName="Unzipping downloaded file" sap:VirtualizedContainerService.HintSize="486,886" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Sequence to handle downloaded ZIP file.&#xA;Move file to Project foder.&#xA;UnZip the file in Project folder." DisplayName="Unzipping downloaded file" sap:VirtualizedContainerService.HintSize="486,1511" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="si:DirectoryInfo" Name="folder_afterUnzip" />
+      <Variable x:TypeArguments="x:String" Name="zip_path" />
+      <Variable x:TypeArguments="ui:GenericValue" Name="var_ProjectPath" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -60,27 +73,64 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <Sequence sap2010:Annotation.AnnotationText="Getting path of User folder, where Downloads fodler is located." DisplayName="Project Folder path" sap:VirtualizedContainerService.HintSize="444,295" sap2010:WorkflowViewState.IdRef="Sequence_2">
-      <Sequence.Variables>
-        <Variable x:TypeArguments="ui:GenericValue" Name="ProjectPath" />
-      </Sequence.Variables>
+    <Sequence sap2010:Annotation.AnnotationText="Getting path of User folder, where Downloads fodler is located." DisplayName="Project Folder path" sap:VirtualizedContainerService.HintSize="444,395" sap2010:WorkflowViewState.IdRef="Sequence_2">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_1">
+      <Assign DisplayName="Assign Var" sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_1">
         <Assign.To>
-          <OutArgument x:TypeArguments="ui:GenericValue">[ProjectPath]</OutArgument>
+          <OutArgument x:TypeArguments="ui:GenericValue">[var_ProjectPath]</OutArgument>
         </Assign.To>
         <Assign.Value>
           <InArgument x:TypeArguments="ui:GenericValue">[IO.Directory.GetCurrentDirectory]</InArgument>
         </Assign.Value>
       </Assign>
-      <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="262,61" sap2010:WorkflowViewState.IdRef="WriteLine_1" Text="[&quot;Project Folder path is: &quot;+ProjectPath.ToString]" />
+      <Assign DisplayName="Assign Argument" sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_2">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[io_ProjectFolder]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">[var_ProjectPath]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="262,61" sap2010:WorkflowViewState.IdRef="WriteLine_1" Text="[&quot;Project Folder path is: &quot;+var_ProjectPath.ToString]" />
     </Sequence>
-    <ui:MoveFile ContinueOnError="{x:Null}" Destination="C:\Users\Bart\Documents\GitHub\UiPath-Project_1\Project 1 - Sorting files" DisplayName="Move ZIP File" sap:VirtualizedContainerService.HintSize="444,157" sap2010:WorkflowViewState.IdRef="MoveFile_1" Overwrite="True" Path="C:\Users\Bart\Downloads\intro-to-uipath-rpa-project.zip" />
-    <uascw:ExtractFiles Password="{x:Null}" CodePage="Default" DestinationFolder="C:\Users\Bart\Documents\GitHub\UiPath-Project_1\Project 1 - Sorting files" DestinationFolderInfo="[folder_afterUnzip]" DisplayName="Extract/Unzip Files" ExtractToADedicatedFolder="False" FileToExtract="C:\Users\Bart\Documents\GitHub\UiPath-Project_1\Project 1 - Sorting files\intro-to-uipath-rpa-project.zip" sap:VirtualizedContainerService.HintSize="444,205" sap2010:WorkflowViewState.IdRef="ExtractFiles_1" SkipUnsupportedFiles="False" />
+    <Sequence DisplayName="ZIp file path in Downloads" sap:VirtualizedContainerService.HintSize="444,253" sap2010:WorkflowViewState.IdRef="Sequence_4">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <Assign sap:VirtualizedContainerService.HintSize="262,60" sap2010:WorkflowViewState.IdRef="Assign_3">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[zip_path]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">[io_zip_file.FullName]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="262,61" sap2010:WorkflowViewState.IdRef="WriteLine_3" Text="[&quot;ZIP file path is: &quot;+zip_path]" />
+    </Sequence>
+    <ui:MoveFile ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Moving file from Downloads folder to Project folder." Destination="[io_ProjectFolder]" DisplayName="Move ZIP File" sap:VirtualizedContainerService.HintSize="444,188" sap2010:WorkflowViewState.IdRef="MoveFile_2" Overwrite="True" Path="[zip_path]">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </ui:MoveFile>
+    <uascw:ExtractFiles Password="{x:Null}" CodePage="Default" DestinationFolder="[io_ProjectFolder]" DestinationFolderInfo="[folder_afterUnzip]" DisplayName="Extract/Unzip Files" ExtractToADedicatedFolder="False" FileToExtract="[io_ProjectFolder+&quot;\&quot;+io_zip_file.Name]" sap:VirtualizedContainerService.HintSize="444,205" sap2010:WorkflowViewState.IdRef="ExtractFiles_2" SkipUnsupportedFiles="False" />
+    <Assign sap:VirtualizedContainerService.HintSize="444,60" sap2010:WorkflowViewState.IdRef="Assign_4">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[out_UnzipFolder]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[folder_afterUnzip.FullName]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="444,61" sap2010:WorkflowViewState.IdRef="WriteLine_4" Text="[&quot;Files unzipped to: &quot;+folder_afterUnzip.FullName]" />
   </Sequence>
 </Activity>

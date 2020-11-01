@@ -54,6 +54,8 @@
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="var_UserFolder" />
       <Variable x:TypeArguments="si:FileInfo" Name="var_zip_file" />
+      <Variable x:TypeArguments="x:String" Name="var_ProjecFolder" />
+      <Variable x:TypeArguments="x:String" Name="var_UnzipFolder" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -73,7 +75,10 @@
     </ui:InvokeWorkflowFile>
     <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Invoking Unziping file workflow" DisplayName="Invoke 2_ZIP_file workflow" sap:VirtualizedContainerService.HintSize="334,143" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="2_ZIP_file.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <scg:Dictionary x:TypeArguments="x:String, Argument" />
+        <InOutArgument x:TypeArguments="x:String" x:Key="io_UserFolder">[var_UserFolder]</InOutArgument>
+        <InOutArgument x:TypeArguments="si:FileInfo" x:Key="io_zip_file">[var_zip_file]</InOutArgument>
+        <InOutArgument x:TypeArguments="x:String" x:Key="io_ProjectFolder">[var_ProjecFolder]</InOutArgument>
+        <OutArgument x:TypeArguments="x:String" x:Key="out_UnzipFolder">[var_UnzipFolder]</OutArgument>
       </ui:InvokeWorkflowFile.Arguments>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -83,7 +88,7 @@
     </ui:InvokeWorkflowFile>
     <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Invoking File Sorting workflow." DisplayName="Invoke 3_Sorting workflow" sap:VirtualizedContainerService.HintSize="334,143" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="3_Sorting.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <scg:Dictionary x:TypeArguments="x:String, Argument" />
+        <InArgument x:TypeArguments="x:String" x:Key="in_UnzipFolder">[var_UnzipFolder]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
