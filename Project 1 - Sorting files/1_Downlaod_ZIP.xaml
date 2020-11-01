@@ -1,11 +1,12 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="Main" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:si="clr-namespace:System.IO;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="zip_file" Type="OutArgument(si:FileInfo)" />
+    <x:Property Name="io_UserFolder" Type="InOutArgument(x:String)" />
+    <x:Property Name="out_zip_file" Type="OutArgument(si:FileInfo)" />
   </x:Members>
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>614,1511</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>614,2006</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -54,27 +55,40 @@
       <AssemblyReference>System.ServiceModel</AssemblyReference>
       <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
       <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap:VirtualizedContainerService.HintSize="594,1451" sap2010:WorkflowViewState.IdRef="Sequence_5">
+  <Sequence sap2010:Annotation.AnnotationText="Downlaod sequence is handling intial phase of downlaoding ZIP file from GiHub repo.&#xA;Open location in Browser, then downlaod the ZIP file and save it in Downlods folder on local drive." DisplayName="Download ZIP file - Sequence" sap:VirtualizedContainerService.HintSize="594,1906" sap2010:WorkflowViewState.IdRef="Sequence_5">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:OpenBrowser CommunicationMethod="{x:Null}" Hidden="{x:Null}" NewSession="{x:Null}" Private="{x:Null}" UiBrowser="{x:Null}" BrowserType="Chrome" DisplayName="Open Browser" sap:VirtualizedContainerService.HintSize="552,1359" sap2010:WorkflowViewState.IdRef="OpenBrowser_1" Url="https://github.com/udacity/nd340-c1-intro-to-uipath-rpa-project-starter">
+    <Sequence sap2010:Annotation.AnnotationText="Getting path of User folder, where Downloads folder is located." DisplayName="User Folder path" sap:VirtualizedContainerService.HintSize="552,285" sap2010:WorkflowViewState.IdRef="Sequence_8">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <ui:GetEnvironmentFolder DisplayName="Get Environment Folder" FolderPath="[io_UserFolder]" sap:VirtualizedContainerService.HintSize="334,61" sap2010:WorkflowViewState.IdRef="GetEnvironmentFolder_1" SpecialFolder="UserProfile" />
+      <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="334,61" sap2010:WorkflowViewState.IdRef="WriteLine_2" Text="[&quot;User Folder path is: &quot;+io_UserFolder.ToString]" />
+    </Sequence>
+    <ui:OpenBrowser CommunicationMethod="{x:Null}" Hidden="{x:Null}" NewSession="{x:Null}" Private="{x:Null}" UiBrowser="{x:Null}" BrowserType="Chrome" DisplayName="Open Browser" sap:VirtualizedContainerService.HintSize="552,1447" sap2010:WorkflowViewState.IdRef="OpenBrowser_1" Url="https://github.com/udacity/nd340-c1-intro-to-uipath-rpa-project-starter">
       <ui:OpenBrowser.Body>
         <ActivityAction x:TypeArguments="x:Object">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
           </ActivityAction.Argument>
-          <Sequence sap:VirtualizedContainerService.HintSize="518,1260" sap2010:WorkflowViewState.IdRef="Sequence_2">
+          <Sequence sap:VirtualizedContainerService.HintSize="518,1348" sap2010:WorkflowViewState.IdRef="Sequence_2">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="476,1106" sap2010:WorkflowViewState.IdRef="Sequence_1">
+            <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="476,1137" sap2010:WorkflowViewState.IdRef="Sequence_1">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -124,7 +138,7 @@
                   </ui:Target>
                 </ui:Click.Target>
               </ui:Click>
-              <ui:TypeInto ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" DisplayName="Type Into 'Edit'" sap:VirtualizedContainerService.HintSize="434,134" sap2010:WorkflowViewState.IdRef="TypeInto_1" Text="%userprofile%\Downloads\intro-to-uipath-rpa-project">
+              <ui:TypeInto ClickBeforeTyping="{x:Null}" DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" EmptyField="{x:Null}" SendWindowMessages="{x:Null}" SimulateType="{x:Null}" Activate="True" DisplayName="Type Into 'Edit'" sap:VirtualizedContainerService.HintSize="434,134" sap2010:WorkflowViewState.IdRef="TypeInto_1" Text="[io_UserFolder+&quot;\Downloads\intro-to-uipath-rpa-project&quot;]">
                 <ui:TypeInto.Target>
                   <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="16c185953d993551ece8bc82dc198742" Selector="&lt;wnd app='chrome.exe' cls='#32770' title='Save As' /&gt;&lt;wnd aaname='Explorer Pane' cls='DirectUIHWND' /&gt;&lt;wnd aaname='File name:' cls='ComboBox' /&gt;&lt;wnd ctrlid='1001' /&gt;">
                     <ui:Target.TimeoutMS>
@@ -136,7 +150,7 @@
                   </ui:Target>
                 </ui:TypeInto.Target>
               </ui:TypeInto>
-              <ui:GetLastDownloadedFile Timeout="{x:Null}" sap2010:Annotation.AnnotationText="This activity waits for ZIP file to be downloaded, and then allows other activities to proceed." DisplayName="Wait for Download to finish" DownloadFolder="C:\Users\Bart\Downloads" File="[zip_file]" sap:VirtualizedContainerService.HintSize="434,447" sap2010:WorkflowViewState.IdRef="GetLastDownloadedFile_1">
+              <ui:GetLastDownloadedFile Timeout="{x:Null}" sap2010:Annotation.AnnotationText="This activity waits for ZIP file to be downloaded in full, and then allows other activities to proceed." DisplayName="Wait for Download to finish" DownloadFolder="[io_UserFolder+&quot;\Downloads&quot;]" File="[out_zip_file]" sap:VirtualizedContainerService.HintSize="434,447" sap2010:WorkflowViewState.IdRef="GetLastDownloadedFile_1">
                 <ui:GetLastDownloadedFile.Body>
                   <ActivityAction>
                     <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="376,198" sap2010:WorkflowViewState.IdRef="Sequence_7">
@@ -176,9 +190,21 @@
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
               </ui:GetLastDownloadedFile>
-              <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="434,61" sap2010:WorkflowViewState.IdRef="WriteLine_1" Text="Browser task complete. Closing the Tab" />
+              <WriteLine sap2010:Annotation.AnnotationText="Comment into Output console." DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="434,92" sap2010:WorkflowViewState.IdRef="WriteLine_1" Text="Browser task complete. Closing the Tab">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+              </WriteLine>
             </Sequence>
-            <ui:CloseTab Browser="{x:Null}" DisplayName="Close Tab" sap:VirtualizedContainerService.HintSize="476,22" sap2010:WorkflowViewState.IdRef="CloseTab_1" />
+            <ui:CloseTab Browser="{x:Null}" sap2010:Annotation.AnnotationText="Closing browser window at the end of download operation." DisplayName="Close Tab" sap:VirtualizedContainerService.HintSize="476,79" sap2010:WorkflowViewState.IdRef="CloseTab_1">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </ui:CloseTab>
           </Sequence>
         </ActivityAction>
       </ui:OpenBrowser.Body>

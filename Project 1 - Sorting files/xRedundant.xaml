@@ -1,4 +1,12 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="xRedundant" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="546,389" sap2010:WorkflowViewState.IdRef="xRedundant_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="xRedundant" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="out_Path_download" Type="OutArgument(x:String)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>666,1074</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>xRedundant_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>System.Activities</x:String>
@@ -42,18 +50,54 @@
       <AssemblyReference>System.Xaml</AssemblyReference>
       <AssemblyReference>UiPath.System.Activities</AssemblyReference>
       <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>Microsoft.Bcl.AsyncInterfaces</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="xRedundant" sap:VirtualizedContainerService.HintSize="526,329" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap:VirtualizedContainerService.HintSize="646,1014" sap2010:WorkflowViewState.IdRef="Sequence_3">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <If Condition="[&quot;%userprofile%\Downloads\intro-to-uipath-rpa-project&quot;]" sap:VirtualizedContainerService.HintSize="484,237" sap2010:WorkflowViewState.IdRef="If_1">
-      <If.Then>
-        <ui:PathExists Exists="{x:Null}" DisplayName="Path Exists" sap:VirtualizedContainerService.HintSize="334,89" sap2010:WorkflowViewState.IdRef="PathExists_1" Path="%userprofile%\Downloads\intro-to-uipath-rpa-project" PathType="File" />
-      </If.Then>
-    </If>
+    <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="604,498" sap2010:WorkflowViewState.IdRef="CommentOut_1">
+      <ui:CommentOut.Body>
+        <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="568,420" sap2010:WorkflowViewState.IdRef="Sequence_4">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Sequence DisplayName="xRedundant" sap:VirtualizedContainerService.HintSize="526,328" sap2010:WorkflowViewState.IdRef="Sequence_1">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If Condition="[&quot;%userprofile%\Downloads\intro-to-uipath-rpa-project&quot;]" sap:VirtualizedContainerService.HintSize="484,236" sap2010:WorkflowViewState.IdRef="If_1">
+              <If.Then>
+                <ui:PathExists Exists="{x:Null}" DisplayName="Path Exists" sap:VirtualizedContainerService.HintSize="334,89" sap2010:WorkflowViewState.IdRef="PathExists_1" Path="%userprofile%\Downloads\intro-to-uipath-rpa-project" PathType="File" />
+              </If.Then>
+            </If>
+          </Sequence>
+        </Sequence>
+      </ui:CommentOut.Body>
+    </ui:CommentOut>
+    <Sequence sap2010:Annotation.AnnotationText="Getting path of User folder, where Downloads fodler is located." DisplayName="User Folder path" sap:VirtualizedContainerService.HintSize="604,384" sap2010:WorkflowViewState.IdRef="Sequence_2">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <ui:GetEnvironmentFolder DisplayName="Get Environment Folder" FolderPath="[out_Path_download]" sap:VirtualizedContainerService.HintSize="334,61" sap2010:WorkflowViewState.IdRef="GetEnvironmentFolder_1" SpecialFolder="UserProfile" />
+      <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="334,61" sap2010:WorkflowViewState.IdRef="WriteLine_1" Text="[&quot;User Folder path is: &quot;+out_Path_download.ToString]" />
+      <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="MessageBox_1" Text="[&quot;Path is: &quot;+Environment.GetFolderPath(Environment.SpecialFolder.Desktop).ToString]" />
+    </Sequence>
   </Sequence>
 </Activity>
