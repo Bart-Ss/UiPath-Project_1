@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="396,661" sap2010:WorkflowViewState.IdRef="Main_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:si="clr-namespace:System.IO;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="Main" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="396,701" sap2010:WorkflowViewState.IdRef="Main_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:si="clr-namespace:System.IO;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="21">
       <x:String>System.Activities</x:String>
@@ -55,7 +55,7 @@
       <Variable x:TypeArguments="x:String" Name="var_UserFolder" />
       <Variable x:TypeArguments="si:FileInfo" Name="var_zip_file" />
       <Variable x:TypeArguments="x:String" Name="var_ProjecFolder" />
-      <Variable x:TypeArguments="x:String" Name="var_UnzipFolder" />
+      <Variable x:TypeArguments="si:DirectoryInfo" Name="var_UnzipFolder" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -78,7 +78,7 @@
         <InOutArgument x:TypeArguments="x:String" x:Key="io_UserFolder">[var_UserFolder]</InOutArgument>
         <InOutArgument x:TypeArguments="si:FileInfo" x:Key="io_zip_file">[var_zip_file]</InOutArgument>
         <InOutArgument x:TypeArguments="x:String" x:Key="io_ProjectFolder">[var_ProjecFolder]</InOutArgument>
-        <OutArgument x:TypeArguments="x:String" x:Key="out_UnzipFolder">[var_UnzipFolder]</OutArgument>
+        <OutArgument x:TypeArguments="si:DirectoryInfo" x:Key="out_UnzipFolder">[var_UnzipFolder]</OutArgument>
       </ui:InvokeWorkflowFile.Arguments>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -88,7 +88,8 @@
     </ui:InvokeWorkflowFile>
     <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" sap2010:Annotation.AnnotationText="Invoking File Sorting workflow." DisplayName="Invoke 3_Sorting workflow" sap:VirtualizedContainerService.HintSize="334,143" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="3_Sorting.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InArgument x:TypeArguments="x:String" x:Key="in_UnzipFolder">[var_UnzipFolder]</InArgument>
+        <InArgument x:TypeArguments="si:DirectoryInfo" x:Key="in_UnzipFolder">[var_UnzipFolder]</InArgument>
+        <InArgument x:TypeArguments="x:String" x:Key="io_ProjectFolder">[var_ProjecFolder]</InArgument>
       </ui:InvokeWorkflowFile.Arguments>
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">

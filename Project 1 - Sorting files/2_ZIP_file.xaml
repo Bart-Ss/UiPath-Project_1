@@ -3,12 +3,12 @@
     <x:Property Name="io_UserFolder" Type="InOutArgument(x:String)" />
     <x:Property Name="io_zip_file" Type="InOutArgument(si:FileInfo)" />
     <x:Property Name="io_ProjectFolder" Type="InOutArgument(x:String)" />
-    <x:Property Name="out_UnzipFolder" Type="OutArgument(x:String)" />
+    <x:Property Name="out_UnzipFolder" Type="OutArgument(si:DirectoryInfo)" />
   </x:Members>
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>506,1571</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>506,1672</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>Sequence2_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="21">
@@ -61,11 +61,12 @@
       <AssemblyReference>System.ServiceModel</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Sequence to handle downloaded ZIP file.&#xA;Move file to Project foder.&#xA;UnZip the file in Project folder." DisplayName="Unzipping downloaded file" sap:VirtualizedContainerService.HintSize="486,1511" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Sequence to handle downloaded ZIP file.&#xA;Move file to Project foder.&#xA;UnZip the file in Project folder." DisplayName="Unzipping downloaded file" sap:VirtualizedContainerService.HintSize="486,1612" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="si:DirectoryInfo" Name="folder_afterUnzip" />
       <Variable x:TypeArguments="x:String" Name="zip_path" />
       <Variable x:TypeArguments="ui:GenericValue" Name="var_ProjectPath" />
+      <Variable x:TypeArguments="x:String" Name="variable1" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -123,12 +124,13 @@
       </sap:WorkflowViewStateService.ViewState>
     </ui:MoveFile>
     <uascw:ExtractFiles Password="{x:Null}" CodePage="Default" DestinationFolder="[io_ProjectFolder]" DestinationFolderInfo="[folder_afterUnzip]" DisplayName="Extract/Unzip Files" ExtractToADedicatedFolder="False" FileToExtract="[io_ProjectFolder+&quot;\&quot;+io_zip_file.Name]" sap:VirtualizedContainerService.HintSize="444,205" sap2010:WorkflowViewState.IdRef="ExtractFiles_2" SkipUnsupportedFiles="False" />
+    <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="444,61" sap2010:WorkflowViewState.IdRef="WriteLine_5" Text="[folder_afterUnzip.GetDirectories(&quot;*&quot;).ToString]" />
     <Assign sap:VirtualizedContainerService.HintSize="444,60" sap2010:WorkflowViewState.IdRef="Assign_4">
       <Assign.To>
-        <OutArgument x:TypeArguments="x:String">[out_UnzipFolder]</OutArgument>
+        <OutArgument x:TypeArguments="si:DirectoryInfo">[out_UnzipFolder]</OutArgument>
       </Assign.To>
       <Assign.Value>
-        <InArgument x:TypeArguments="x:String">[folder_afterUnzip.FullName]</InArgument>
+        <InArgument x:TypeArguments="si:DirectoryInfo">[folder_afterUnzip]</InArgument>
       </Assign.Value>
     </Assign>
     <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="444,61" sap2010:WorkflowViewState.IdRef="WriteLine_4" Text="[&quot;Files unzipped to: &quot;+folder_afterUnzip.FullName]" />
